@@ -76,6 +76,17 @@
 	 MFRC522_TestADCReg = 0x3B, // shows the value of ADC I and Q channels
  } MFRC522Regs_TypeDef;
 
+
+ typedef struct
+ {
+	 SPI_TypeDef* SPIx;
+
+	 GPIO_TypeDef* GPIOx;
+
+	 uint16_t GPIO_Pin;
+
+ }MFRC522_Transport;
+
 #define MFRC522_DUMMY					0x00			// Dummy byte
 #define MFRC522_MAX_LEN					16				// Buf len byte
 
@@ -134,25 +145,25 @@
 		((REG) == MFRC522_TestDAC1Reg) || ((REG) == MFRC522_TestDAC2Reg) || \
 		((REG) == MFRC522_TestADCReg) || ((REG) == MFRC522_CRCResultRegL))
 
- uint8_t MFRC522_Check(SPI_TypeDef* SPIx, uint8_t * id);
+ uint8_t MFRC522_Check(MFRC522_Transport* MFRC522_Transport, uint8_t * id);
  uint8_t MFRC522_Compare(uint8_t * CardID, uint8_t * CompareID);
- void MFRC522_Write(SPI_TypeDef* SPIx, uint8_t addr, uint8_t val);
- uint8_t MFRC522_Read(SPI_TypeDef* SPIx, uint8_t addr);
- void MFRC522_SetBitMask(SPI_TypeDef* SPIx, uint8_t reg, uint8_t mask);
- void MFRC522_ClearBitMask(SPI_TypeDef* SPIx, uint8_t reg, uint8_t mask);
- void MFRC522_AntennaOn(SPI_TypeDef* SPIx);
- void MFRC522_AntennaOff(SPI_TypeDef* SPIx);
- void MFRC522_Reset(SPI_TypeDef* SPIx);
- void MFRC522_Init(SPI_TypeDef* SPIx);
- uint8_t MFRC522_Request(SPI_TypeDef* SPIx, uint8_t reqMode, uint8_t *TagType);
- uint8_t MFRC522_ToCard(SPI_TypeDef* SPIx, uint8_t command, uint8_t *sendData, uint8_t sendLen, uint8_t *backData, uint8_t *backLen);
- uint8_t MFRC522_Anticoll(SPI_TypeDef* SPIx, uint8_t *serNum);
- void MFRC522_CalculateCRC(SPI_TypeDef* SPIx, uint8_t *pIndata, uint8_t len, uint8_t *pOutData);
- uint8_t MFRC522_SelectTag(SPI_TypeDef* SPIx, uint8_t *serNum);
- uint8_t MFRC522_Auth(SPI_TypeDef* SPIx, uint8_t authMode, uint8_t BlockAddr, uint8_t *Sectorkey, uint8_t *serNum);
- uint8_t MFRC522_ReadBlock(SPI_TypeDef* SPIx, uint8_t blockAddr, uint8_t *recvData);
- uint8_t MFRC522_WriteBlock(SPI_TypeDef* SPIx, uint8_t blockAddr, uint8_t *writeData);
- void MFRC522_Halt(SPI_TypeDef* SPIx);
+ void MFRC522_Write(MFRC522_Transport* MFRC522_Transport, uint8_t addr, uint8_t val);
+ uint8_t MFRC522_Read(MFRC522_Transport* MFRC522_Transport, uint8_t addr);
+ void MFRC522_SetBitMask(MFRC522_Transport* MFRC522_Transport, uint8_t reg, uint8_t mask);
+ void MFRC522_ClearBitMask(MFRC522_Transport* MFRC522_Transport, uint8_t reg, uint8_t mask);
+ void MFRC522_AntennaOn(MFRC522_Transport* MFRC522_Transport);
+ void MFRC522_AntennaOff(MFRC522_Transport* MFRC522_Transport);
+ void MFRC522_Reset(MFRC522_Transport* MFRC522_Transport);
+ void MFRC522_Init(MFRC522_Transport* MFRC522_Transport);
+ uint8_t MFRC522_Request(MFRC522_Transport* MFRC522_Transport, uint8_t reqMode, uint8_t *TagType);
+ uint8_t MFRC522_ToCard(MFRC522_Transport* MFRC522_Transport, uint8_t command, uint8_t *sendData, uint8_t sendLen, uint8_t *backData, uint16_t *backLen);
+ uint8_t MFRC522_Anticoll(MFRC522_Transport* MFRC522_Transport, uint8_t *serNum);
+ void MFRC522_CalculateCRC(MFRC522_Transport* MFRC522_Transport, uint8_t *pIndata, uint8_t len, uint8_t *pOutData);
+ uint8_t MFRC522_SelectTag(MFRC522_Transport* MFRC522_Transport, uint8_t *serNum);
+ uint8_t MFRC522_Auth(MFRC522_Transport* MFRC522_Transport, uint8_t authMode, uint8_t BlockAddr, uint8_t *Sectorkey, uint8_t *serNum);
+ uint8_t MFRC522_ReadBlock(MFRC522_Transport* MFRC522_Transport, uint8_t blockAddr, uint8_t *recvData);
+ uint8_t MFRC522_WriteBlock(MFRC522_Transport* MFRC522_Transport, uint8_t blockAddr, uint8_t *writeData);
+ void MFRC522_Halt(MFRC522_Transport* MFRC522_Transport);
 
 #ifdef __cplusplus
 }
